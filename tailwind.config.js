@@ -7,10 +7,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        Abril: ['"Abril Fatface"', 'cursive'],
       },
       colors: {
         lightTheme: {
@@ -23,7 +21,7 @@ module.exports = {
           Selection: '#afafaf',
           buttonText: '#fff',
           button: '#000',
-          span: '#fcf4eb',
+          span: '#f5dcbf ',
           nav: '#FF8700',
           scrollback: '#fff',
           textBig: '#F9F7F6',

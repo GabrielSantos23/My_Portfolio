@@ -1,15 +1,17 @@
 'use client';
 
-import { createContext } from 'react';
+import { createContext, useEffect } from 'react';
 import KbarProvider from './components/Kbar/KbarProvider';
 import { Layout } from './components/Layout/Layout';
 import './globals.css';
-import { Montserrat } from 'next/font/google';
+import { Montserrat, Abril_Fatface } from 'next/font/google';
 import { useState } from 'react';
+import { ThemeContext } from './components/Styles/themeContext';
 
-const montserrat = Montserrat({ subsets: ['latin'] });
-
-export const ThemeContext = createContext<any>(null);
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+});
 
 export default function RootLayout({
   children,
@@ -18,30 +20,33 @@ export default function RootLayout({
 }) {
   const [theme, setTheme] = useState('dark');
 
-  const toggleTheme = () => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (theme === 'dark') {
-        window.localStorage.setItem('theme', 'light');
-        setTheme('light');
-      } else {
-        window.localStorage.setItem('theme', 'dark');
-        setTheme('dark');
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme !== null && storedTheme !== undefined) {
+        setTheme(storedTheme);
       }
+    }
+  }, []);
+
+  const updateTheme = (newTheme: string) => {
+    setTheme(newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
     }
   };
 
   return (
     <html lang='en'>
-      <body className={montserrat.className}>
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
-          <div
-            className={`
-              ${
-                theme === 'dark' ? 'bg-darkTheme-body' : 'bg-lightTheme-body'
-              } h-screen ${
-              theme === 'dark' ? 'text-darkTheme-text' : 'text-lightTheme-text'
-            } transition `}
-          >
+      <body
+        className={`${montserrat.className}  ${
+          theme === 'dark' ? 'bg-darkTheme-body' : 'bg-lightTheme-body'
+        }  ${
+          theme === 'dark' ? 'text-darkTheme-text' : 'text-lightTheme-text'
+        } transition  `}
+      >
+        <ThemeContext.Provider value={{ theme, setTheme: updateTheme }}>
+          <div>
             <KbarProvider>
               <Layout>{children}</Layout>
             </KbarProvider>

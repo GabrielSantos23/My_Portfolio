@@ -13,25 +13,8 @@ import {
 } from 'kbar';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import styled from 'styled-components';
 
-const Button = styled.button`
-  background-color: transparent;
-  transition: background-color 0.5s ease, color 0.5s ease;
-  :hover {
-    background-color: ${({ theme }) => theme.span};
-  }
-`;
-
-const BarAnimator = styled(KBarAnimator)`
-  background-color: ${({ theme }) => theme.card};
-  opacity: 0;
-  backdrop-filter: blur(10px);
-`;
-
-const BarSearch = styled(KBarSearch)`
-  background-color: ${({ theme }) => theme.card};
-`;
+import { ThemeContext } from '../Styles/themeContext';
 
 export default function Kbar() {
   return (
@@ -43,50 +26,56 @@ export default function Kbar() {
     </div>
   );
 }
-const Div = styled.div`
-  .active {
-    background-color: ${({ theme }) => theme.span};
-  }
-`;
-
-const Esc = styled.div`
-  background-color: ${({ theme }) => theme.body};
-`;
-
-const Kbd = styled.kbd`
-  background-color: ${({ theme }) => theme.body};
-`;
-const BarPositioner = styled(KBarPositioner)`
-  backdrop-filter: blur(3px);
-`;
 
 function CommandBar() {
+  const { theme, setTheme } = React.useContext(ThemeContext);
   return (
     <KBarPortal>
-      <BarPositioner className='p-2  flex items-center z-[10000]'>
-        <BarAnimator className=' w-[550px] overflow-hidden p-2  rounded-xl mb-10'>
+      <KBarPositioner className='p-2 backdrop-blur-sm  flex items-center z-[10000]'>
+        <KBarAnimator
+          className={`${
+            theme === 'dark' ? 'bg-darkTheme-card' : 'bg-lightTheme-card'
+          }  w-[550px] overflow-hidden p-2  rounded-xl mb-10 opacity-0 backdrop-blur-md`}
+        >
           <div className='flex items-center'>
-            <MagnifyingGlassIcon className=' w-7 ml-2' />
-            <BarSearch className='flex px-4 w-full h-16 outline-none  ' />
-            <Esc className='text-[#BCBCBC] mr-4 px-2 flex items-center pb-1  cursor-default rounded-lg'>
+            <MagnifyingGlassIcon
+              className={` w-7 ml-2
+            
+            ${theme === 'dark' ? 'text-darkTheme-text' : 'text-darkTheme-text'}
+            `}
+            />
+            <KBarSearch
+              className={`flex px-4 w-full h-16 outline-none ${
+                theme === 'dark' ? 'bg-darkTheme-card' : 'bg-lightTheme-card'
+              }  `}
+            />
+            <div
+              className={`text-[#BCBCBC] mr-4 px-2 flex items-center pb-1  cursor-default rounded-lg ${
+                theme === 'dark' ? 'bg-darkTheme-body' : 'bg-lightTheme-body'
+              } `}
+            >
               esc
-            </Esc>
+            </div>
           </div>
           <div className='pb-10'>
             <RenderResults />
           </div>
-        </BarAnimator>
-      </BarPositioner>
+        </KBarAnimator>
+      </KBarPositioner>
     </KBarPortal>
   );
 }
 
 function CommandButton() {
+  const { theme, setTheme } = React.useContext(ThemeContext);
+
   const { query } = useKBar();
   return (
-    <Button
+    <button
       onClick={query.toggle}
-      className='flex items-center justify-center w-12 h-12 mr-4  rounded-md  general-ring-state'
+      className={`flex items-center justify-center bg-transparent transition-all ${
+        theme === 'dark' ? 'bg-darkTheme-span' : 'bg-lightTheme-span'
+      }w-12 h-12 mr-4  rounded-md  general-ring-state`}
     >
       <svg width='22' height='22' fill='none' viewBox='0 0 18 18'>
         <path
@@ -97,7 +86,7 @@ function CommandButton() {
           d='M14.333 1a2.667 2.667 0 0 0-2.666 2.667v10.666a2.667 2.667 0 1 0 2.666-2.666H3.667a2.667 2.667 0 1 0 2.666 2.666V3.667a2.667 2.667 0 1 0-2.666 2.666h10.666a2.667 2.667 0 0 0 0-5.333Z'
         />
       </svg>
-    </Button>
+    </button>
   );
 }
 
@@ -146,16 +135,26 @@ const ResultItem = React.forwardRef(function ResultItem(
 
     return action.ancestors.slice(index + 1);
   }, [action.ancestors, currentRootActionId]);
-
+  const { theme, setTheme } = React.useContext(ThemeContext);
   return (
-    <Div>
+    <div
+      className={
+        active
+          ? `${theme === 'dark' ? 'bg-darkTheme-span' : 'bg-lightTheme-span'}`
+          : undefined
+      }
+    >
       <div
         ref={ref}
         className={`${
           active ? 'active rounded-lg  ' : 'transparent'
         } 'rounded-lg px-4 py-2 flex items-center cursor-pointer justify-between  `}
       >
-        <div className='flex items-center gap-2 text-base'>
+        <div
+          className={`flex items-center gap-2 text-base ${
+            theme === 'dark' ? 'text-darkTheme-text' : 'text-lightTheme-text'
+          }`}
+        >
           <div className='flex flex-col'>
             <div>
               {ancestors.length > 0 &&
@@ -183,17 +182,21 @@ const ResultItem = React.forwardRef(function ResultItem(
         {action.shortcut?.length ? (
           <div aria-hidden className='grid grid-flow-col gap-2'>
             {action.shortcut.map((sc) => (
-              <Kbd
+              <kbd
                 key={sc}
-                className='px-2 pb-1 rounded-lg  '
+                className={`px-2 ${
+                  theme === 'dark'
+                    ? 'bg-darkTheme-body text-darkTheme-text'
+                    : 'bg-lightTheme-body text-darkTheme-text'
+                } pb-1 rounded-lg  `}
                 style={{ border: '0.1px solid #ffffff22' }}
               >
                 {sc}
-              </Kbd>
+              </kbd>
             ))}
           </div>
         ) : null}
       </div>
-    </Div>
+    </div>
   );
 });

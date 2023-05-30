@@ -1,5 +1,9 @@
-import Image from 'next/image';
+import Body from './components/Body';
 
 export default function Home() {
-  return <div></div>;
+  return (
+    <div className='flex h-screen mt-[-80px] '>
+      <Body />
+    </div>
+  );
 }

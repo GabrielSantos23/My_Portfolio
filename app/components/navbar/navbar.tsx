@@ -1,9 +1,8 @@
-'use client';
-
-import { ThemeContext } from '@/app/layout';
-import Link from 'next/link';
-import React, { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { ThemeContext } from '../Styles/themeContext';
+import Link from 'next/link';
+
 const navItems = [
   { text: 'Home', href: '/' },
   { text: 'About', href: '/about' },
@@ -13,10 +12,38 @@ const navItems = [
 ];
 
 const Navbar = ({}) => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const [show, setShow] = useState('translate-y-0');
+  const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
+  const [mobileMenu, setMobileMenu] = useState(false);
+
+  function toggleTheme() {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  }
+  const controlNavbar = () => {
+    if (window.scrollY > 200) {
+      if (window.scrollY > lastScrollY && !mobileMenu) {
+        setShow('-translate-y-[80px]');
+      } else {
+        setShow('shadow-sm');
+      }
+    } else {
+      setShow('translate-y-0');
+    }
+    setLastScrollY(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
   return (
-    <header className='flex py-5 item-center justify-between '>
+    <header
+      className={`lg:flex sticky duration-300 hidden py-5 item-center justify-between transition-transform  ${show} z-[100] `}
+    >
       <div>~</div>
       <div className={`flex items-center  transition  gap-8 `}>
         {navItems.map((item) => (
