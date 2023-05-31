@@ -43,7 +43,11 @@ export default function RootLayout({
           theme === 'dark' ? 'bg-darkTheme-body' : 'bg-lightTheme-body'
         }  ${
           theme === 'dark' ? 'text-darkTheme-text' : 'text-lightTheme-text'
-        } transition  `}
+        } transition  scrollbar-thin ${
+          theme === 'dark'
+            ? 'scrollbar-thumb-darkTheme-span scrollbar-track-darkTheme-scrollback'
+            : 'scrollbar-thumb-lightTheme-span  scrollbar-track-lightTheme-scrollback'
+        }  `}
       >
         <ThemeContext.Provider value={{ theme, setTheme: updateTheme }}>
           <div>

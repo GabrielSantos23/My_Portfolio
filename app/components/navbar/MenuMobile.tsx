@@ -6,6 +6,7 @@ import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 import { ThemeContext } from '../Styles/themeContext';
 
 import Link from 'next/link';
+import { ThemeToggle } from '../ThemeToggle';
 
 const MenuMobile = ({}) => {
   const [isOpen, setOpen] = useState(false);
@@ -41,7 +42,7 @@ const MenuMobile = ({}) => {
           } absolute top-0 right-0 z-[99999] items-center justify-center w-full h-full  `}
         >
           <div className='mt-5 ml-10'>
-            <button onClick={toggleTheme}>click</button>
+            <ThemeToggle toggleTheme={toggleTheme} />
           </div>
           <div className=' h-full flex items-center flex-col justify-center gap-10 text-xl'>
             <Link onClick={() => setOpen(false)} href={'/'}>

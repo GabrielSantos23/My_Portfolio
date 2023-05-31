@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { abrilFatface } from '../components/Styles/Fonts';
 import { ThemeContext } from '../components/Styles/themeContext';
+import HelmetComponent from '../components/Helmet';
 
 const Resume = () => {
   const [click, setClick] = useState(false);
@@ -42,6 +43,7 @@ const Resume = () => {
     'https://drive.google.com/file/d/1tl1-erRx9Fs4fpTSOCtI1MBQfPMDQBh0/view?usp=sharing';
   return (
     <div className='relative z-10  w-full'>
+      <HelmetComponent title='Resume | Gabriel Santos' />
       <div className={` flex flex-col  h-screen items-center mt-32 p-5 `}>
         <div className='max-w-5xl w-full'>
           <h1 className='text-5xl font-bold mb-10'>Resume.</h1>
@@ -79,21 +81,19 @@ const Resume = () => {
           </div>
         </div>
       </div>
-      <p
-        className={`${
-          abrilFatface.className
-        } fixed 2xl:bottom-0 bottom-20 left-[-20px] 2xl:left-[-60px] select-none ${
-          theme === 'dark'
-            ? 'text-darkTheme-textBig'
-            : 'text-lightTheme-textBig'
-        }`}
-        style={{
-          fontSize: '15vw',
-          zIndex: -1,
-        }}
-      >
-        Resume.
-      </p>
+      <div className='fixed bottom-[330px] 2xl:left-[100px] z-[-1] transform -translate-x-1/2 rotate-90'>
+        <p
+          className={`  text-[13vw] leading-none mb-4 ${
+            abrilFatface.className
+          } ${
+            theme === 'dark'
+              ? 'text-darkTheme-textBig'
+              : 'text-lightTheme-textBig'
+          }`}
+        >
+          Resume.
+        </p>
+      </div>
       {click ? (
         <div
           className='fixed top-0 left-0 bg-black/75  w-screen  z-[1000000000] p-5 h-screen items-center justify-center '

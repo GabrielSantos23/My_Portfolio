@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { ThemeContext } from '../Styles/themeContext';
 import Link from 'next/link';
+import { ThemeToggle } from '../ThemeToggle';
 
 const navItems = [
   { text: 'Home', href: '/' },
@@ -69,9 +70,7 @@ const Navbar = ({}) => {
         ))}
       </div>
       <div>
-        <button className='' onClick={toggleTheme}>
-          change
-        </button>
+        <ThemeToggle toggleTheme={toggleTheme} />
       </div>
     </header>
   );

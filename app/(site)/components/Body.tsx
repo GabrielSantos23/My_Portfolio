@@ -68,21 +68,6 @@ const Body = () => {
           </div>
         </div>
       </div>
-      <p
-        className={`${
-          abrilFatface.className
-        } fixed   2xl:bottom-0 bottom-20 left-[-20px] 2xl:left-[-60px] select-none ${
-          theme === 'dark'
-            ? 'text-darkTheme-textBig'
-            : 'text-lightTheme-textBig'
-        }`}
-        style={{
-          fontSize: '15vw',
-          zIndex: -1,
-        }}
-      >
-        Hello, There.
-      </p>
     </div>
   );
 };

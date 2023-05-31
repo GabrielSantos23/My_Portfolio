@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import Head from 'next/head';
 import { ThemeContext } from '../components/Styles/themeContext';
 import { abrilFatface } from '../components/Styles/Fonts';
+import HelmetComponent from '../components/Helmet';
 interface ThemeProps {
   body: string;
   line: string;
@@ -52,9 +53,8 @@ const About = () => {
   return (
     <>
       <div className='mx-auto max-w-4xl px-5 lg:h-screen mt-32 justify-center  flex flex-col relative z-10'>
-        <Head>
-          <title>About | Gabriel Santos</title>
-        </Head>
+        <HelmetComponent title='About | Gabriel Santos' />
+
         <div className=' '>
           <h1 className='text-5xl font-bold mb-10 '>About Me.</h1>
         </div>
@@ -149,21 +149,19 @@ const About = () => {
             </div>
           ))}
         </div>
-        <p
-          className={`${
-            abrilFatface.className
-          } fixed 2xl:bottom-0 bottom-20 left-[-20px] 2xl:left-[-60px] select-none ${
-            theme === 'dark'
-              ? 'text-darkTheme-textBig'
-              : 'text-lightTheme-textBig'
-          }`}
-          style={{
-            fontSize: '15vw',
-            zIndex: -1,
-          }}
-        >
-          About Me.
-        </p>
+        <div className='fixed bottom-0 z-[-1] left-0 '>
+          <p
+            className={`  text-[15vw] leading-none mb-4 ${
+              abrilFatface.className
+            } ${
+              theme === 'dark'
+                ? 'text-darkTheme-textBig'
+                : 'text-lightTheme-textBig'
+            }`}
+          >
+            About.
+          </p>
+        </div>
       </div>
     </>
   );
