@@ -14,15 +14,12 @@ type LayoutProps = {
 };
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { theme, setTheme } = useContext(ThemeContext);
-
   return (
     <div className='lg:px-10  px-5  flex flex-col'>
       <Kbar />
       <Navbar />
       <MenuMobile />
       {children}
-      {/* <Footer /> */}
     </div>
   );
 };

@@ -16,7 +16,7 @@ const MenuMobile = ({}) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const theme = localStorage.getItem('theme');
-      setTheme(theme || 'light');
+      setTheme(theme || 'dark');
     }
   }, []);
   function toggleTheme() {

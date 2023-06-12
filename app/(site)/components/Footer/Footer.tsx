@@ -74,7 +74,7 @@ const Footer = () => {
   };
 
   return (
-    <div className='flex items-center justify-center mt-0 2xl:ml-44 z-[10]'>
+    <div className='flex items-center justify-center mt-0  z-[10]'>
       <div className='absolute bottom-5 w-full 2xl:flex hidden max-w-[700px] items-center justify-center'>
         {items.map((item, index) => (
           <div
